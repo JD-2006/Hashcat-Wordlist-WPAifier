@@ -2,10 +2,14 @@ import os
 from tqdm import tqdm
 
 def process_file(input_file_path, output_file_path):
-    with open(input_file_path, 'r') as input_file, open(output_file_path, 'w') as output_file:
-        for line in input_file:
-            if len(line.strip()) >= 8:
-                output_file.write(line)
+    try:
+        with open(input_file_path, 'r', encoding='utf-8', errors='ignore') as input_file, \
+             open(output_file_path, 'w', encoding='utf-8') as output_file:
+            for line in input_file:
+                if len(line.strip()) >= 8:
+                    output_file.write(line)
+    except Exception as e:
+        print(f"Error processing {input_file_path}: {e}")
 
 def process_folder(input_folder, output_folder):
     if not os.path.exists(output_folder):
@@ -23,7 +27,8 @@ def main():
     output_folder = input("Enter the output folder location: ")
 
     process_folder(input_folder, output_folder)
-    print("Processing complete.")
+    print("Processing complete. Check the output folder for the fixed files.")
 
 if __name__ == "__main__":
     main()
+
